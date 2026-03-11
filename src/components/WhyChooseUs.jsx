@@ -62,9 +62,9 @@ export default function WhyChooseUs() {
                 {/* The Scroll-Spy Layout */}
                 <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 relative">
 
-                    {/* LEFT PANE: Sticky Cinematic Image Window (Perfect Viewport Centering) */}
-                    <div className="hidden lg:flex w-[45%] h-screen sticky top-0 flex-col justify-center items-center">
-                        <div className="w-full h-[65vh] relative rounded-[48px] overflow-hidden shadow-[0_40px_100px_rgba(6,30,45,0.2)] border border-[#061E2D]/10">
+                    {/* LEFT PANE: Sticky Cinematic Image Window (Hidden on small mobile) */}
+                    <div className="hidden lg:flex w-[45%] h-screen sticky top-0 items-center py-16">
+                        <div className="w-full h-full relative rounded-[32px] overflow-hidden shadow-[0_30px_80px_rgba(6,30,45,0.15)] border border-[#061E2D]/5">
                             <AnimatePresence mode="wait">
                                 <motion.img
                                     key={activeIndex}

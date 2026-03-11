@@ -38,7 +38,7 @@ export default function Header() {
                     <div className="w-8 h-8 bg-accent flex items-center justify-center rounded-lg rotate-12 group-hover:rotate-0 transition-transform duration-500">
                         <span className="font-serif font-bold text-surface text-xl">T</span>
                     </div>
-                    <span className="font-serif text-2xl font-bold tracking-tighter text-primary">
+                    <span className={`font-serif text-2xl font-bold tracking-tighter transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`}>
                         THRISSUR <span className="text-accent">VILLAS</span>
                     </span>
                 </motion.div>
@@ -52,17 +52,19 @@ export default function Header() {
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.1 }}
-                            className="font-sans text-[11px] uppercase tracking-[0.3em] font-bold text-primary/60 hover:text-accent transition-colors relative group"
+                            className={`font-sans text-[12px] uppercase tracking-[0.15em] font-semibold transition-colors duration-500 relative group ${isScrolled ? 'text-primary/70 hover:text-primary' : 'text-white/80 hover:text-white'
+                                }`}
                         >
                             {link.name}
-                            <span className="absolute -bottom-2 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
+                            <span className={`absolute -bottom-2 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? 'bg-primary' : 'bg-white'
+                                }`} />
                         </motion.a>
                     ))}
 
                     <motion.button
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-primary text-surface px-8 py-3 rounded-full font-sans text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-accent transition-all duration-500 shadow-lg shadow-primary/10"
+                        className="bg-primary text-surface px-8 py-3 rounded-full font-sans text-[11px] uppercase tracking-[0.1em] font-bold hover:bg-accent transition-all duration-500 shadow-lg shadow-primary/10"
                     >
                         Concierge
                     </motion.button>
@@ -70,7 +72,7 @@ export default function Header() {
 
                 {/* MOBILE MENU TOGGLE */}
                 <button
-                    className="md:hidden text-primary p-2"
+                    className={`md:hidden p-2 transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`}
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                     {isMenuOpen ? <X size={24} /> : <Menu size={24} />}

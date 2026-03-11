@@ -96,8 +96,8 @@ export default function FeaturedPlots() {
                             key={plot.id}
                             className="group relative flex flex-col bg-white overflow-hidden shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] transition-all duration-500 will-change-transform hover:-translate-y-2"
                         >
-                            {/* Image Section - Reduced height / widened breadth */}
-                            <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-200">
+                            {/* Image Section - Normal Size */}
+                            <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-200">
                                 <img
                                     src={plot.image}
                                     alt={plot.title}
@@ -124,28 +124,22 @@ export default function FeaturedPlots() {
                                     <ArrowRight size={20} className="-rotate-45" />
                                 </div>
 
-                                {/* Location */}
-                                <div className="flex items-center gap-2 text-[#0B5C8A] text-[11px] font-bold tracking-widest uppercase mb-4">
-                                    <MapPin size={14} className="text-[#D33C29]" />
-                                    {plot.location}
-                                </div>
-
                                 {/* Title */}
-                                <h3 className="text-2xl font-serif font-bold text-[#061E2D] mb-4 group-hover:text-[#D33C29] transition-colors line-clamp-1">
+                                <h3 className="text-[32px] font-sans font-bold text-[#061E2D] mb-2 group-hover:text-[#D33C29] tracking-tight transition-colors line-clamp-1">
                                     {plot.title}
                                 </h3>
 
-                                {/* Description */}
-                                <p className="text-gray-500 font-light text-sm mb-8 flex-grow line-clamp-2 leading-relaxed">
-                                    {plot.description}
-                                </p>
+                                {/* Location (Underneath the title) */}
+                                <div className="flex items-center gap-2 text-[#0B5C8A] text-[11px] font-bold tracking-[0.15em] uppercase mb-8">
+                                    <MapPin size={12} className="text-[#D33C29]" />
+                                    {plot.location}
+                                </div>
 
                                 {/* Specs Row */}
                                 <div className="pt-5 border-t border-gray-100 flex items-end justify-between mt-auto">
                                     <div className="flex flex-col">
                                         <span className="text-gray-400 text-[10px] items-center flex gap-1 font-bold uppercase tracking-widest mb-1.5">
-                                            <Ruler size={12} className="text-[#0B5C8A]" />
-                                            Dimensions
+                                            Area
                                         </span>
                                         <span className="text-[#061E2D] font-bold text-[15px]">
                                             {plot.size}
@@ -153,9 +147,9 @@ export default function FeaturedPlots() {
                                     </div>
                                     <div className="flex flex-col text-right">
                                         <span className="text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-1.5">
-                                            Valuation
+                                            Price
                                         </span>
-                                        <span className="text-[#D33C29] font-bold text-xl tracking-tight leading-none">
+                                        <span className="text-[#D33C29] font-bold text-[22px] tracking-tight leading-none">
                                             {plot.price}
                                         </span>
                                     </div>
