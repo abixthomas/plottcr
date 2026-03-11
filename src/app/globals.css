@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
+@theme {
+  /* $10 Million Luxury Palette */
+  --color-primary: #0B5C8A;
+  /* Deep Marine */
+  --color-accent: #D33C29;
+  /* Burnt Orange */
+  --color-surface: #FFFFFF;
+  /* Pure White */
+  --color-ocean: #061E2D;
+  /* Deep Ocean Base */
+
+  /* Modern Typography */
+  --font-display: var(--font-display);
+  /* Plus Jakarta Sans */
+  --font-body: var(--font-body);
+  /* Inter */
+
+  /* Luxury Spacing Scale */
+  --spacing-section: 6rem;
+  --spacing-element: 2rem;
+
+  /* Custom Transitions */
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #FFFFFF;
+  --foreground: #0B5C8A;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: -0.02em;
+  /* Tight tracking for cinematic feel */
+}
+
+/* Custom Scrollbar for Luxury Experience */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-ocean);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+/* Selection Highlight */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-surface);
+}
+
+/* Hide scrollbar for clean aesthetic */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
