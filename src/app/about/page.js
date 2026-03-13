@@ -9,7 +9,7 @@ export default function About() {
     return (
         <SmoothScroll>
             <main className="relative bg-white min-h-screen">
-                <Header forceDark={true} />
+                <Header />
                 <AboutPage />
                 <Footer />
 
