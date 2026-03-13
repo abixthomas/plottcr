@@ -6,14 +6,14 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import {
-    ArrowRight,
     MapPin,
     ShieldCheck,
     Globe,
     TrendingUp,
     Scale,
     FileText,
-    Award
+    Award,
+    ArrowRight
 } from 'lucide-react';
 
 // Safely register GSAP
@@ -25,22 +25,6 @@ if (typeof window !== 'undefined') {
 const easeApple = [0.16, 1, 0.3, 1];
 
 // --- COMPONENTS ---
-
-// 1. Premium Button
-const PremiumButton = ({ children, onClick, outline = false }) => {
-    const baseStyle = outline
-        ? "border border-[#0B5C8A] text-[#0B5C8A] hover:bg-[#0B5C8A] hover:text-white"
-        : "bg-[#D33C29] text-white shadow-lg shadow-[#D33C29]/20 hover:shadow-[#D33C29]/40 hover:-translate-y-1";
-
-    return (
-        <button
-            onClick={onClick}
-            className={`px-8 py-4 rounded-sm font-[Plus_Jakarta_Sans] font-bold uppercase tracking-widest text-xs transition-all duration-300 flex items-center justify-center gap-3 ${baseStyle}`}
-        >
-            {children}
-        </button>
-    );
-};
 
 // 2. Elegant Counter
 const ElegantCounter = ({ end, suffix = "", title, description }) => {
@@ -205,9 +189,12 @@ export default function AboutPageRefined() {
                         </div>
 
                         <div className="mt-10">
-                            <PremiumButton onClick={() => console.log('Read Philosophy')}>
+                            <button
+                                onClick={() => console.log('Read Philosophy')}
+                                className="px-8 py-4 rounded-sm font-[Plus_Jakarta_Sans] font-bold uppercase tracking-widest text-xs transition-all duration-300 flex items-center justify-center gap-3 bg-[#D33C29] text-white shadow-lg shadow-[#D33C29]/20 hover:shadow-[#D33C29]/40 hover:-translate-y-1"
+                            >
                                 Our Investment Philosophy <ArrowRight size={16} />
-                            </PremiumButton>
+                            </button>
                         </div>
                     </motion.div>
 
@@ -289,9 +276,12 @@ export default function AboutPageRefined() {
                             We do not operate everywhere; we operate where growth is guaranteed. Our focus is strictly on Thrissur's premium residential and commercial corridors.
                         </p>
                         <div>
-                            <PremiumButton outline onClick={() => console.log('View Map')}>
+                            <button
+                                onClick={() => console.log('View Map')}
+                                className="px-8 py-4 rounded-sm font-[Plus_Jakarta_Sans] font-bold uppercase tracking-widest text-xs transition-all duration-300 flex items-center justify-center gap-3 border border-[#0B5C8A] text-[#0B5C8A] hover:bg-[#0B5C8A] hover:text-white"
+                            >
                                 <span className="text-white">Explore Available Plots</span>
-                            </PremiumButton>
+                            </button>
                         </div>
                     </div>
 
@@ -312,69 +302,6 @@ export default function AboutPageRefined() {
                                 </p>
                             </div>
                         ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 6. LEADERSHIP (Clean, Professional Roster) */}
-            <section className="py-32 bg-white">
-                <div className="max-w-[1200px] mx-auto px-6">
-                    <div className="text-center max-w-2xl mx-auto mb-20">
-                        <h2 className="text-[#0B5C8A] text-3xl md:text-5xl font-black tracking-tighter leading-tight font-[Plus_Jakarta_Sans] mb-6">
-                            Guided by Expertise.
-                        </h2>
-                        <p className="text-[#0B5C8A]/70 text-lg font-light leading-relaxed">
-                            Our leadership team unites decades of legal acumen with predictive data science and client-focused relationship management.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                        {team.map((member, idx) => (
-                            <motion.div
-                                key={idx}
-                                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: idx * 0.1, ease: easeApple }}
-                                className="group"
-                            >
-                                <div className="w-full aspect-[4/5] rounded-sm overflow-hidden bg-[#F8FAFC] mb-6 relative">
-                                    <Image
-                                        src={member.img} alt={member.name} fill
-                                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                                    />
-                                </div>
-                                <div>
-                                    <h3 className="text-[#0B5C8A] font-black text-xl font-[Plus_Jakarta_Sans] mb-1">{member.name}</h3>
-                                    <p className="text-[#D33C29] text-xs font-bold uppercase tracking-widest mb-4">{member.role}</p>
-                                    <p className="text-[#0B5C8A]/70 text-sm font-light leading-relaxed">
-                                        {member.bio}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 7. REFINED CTA BANNER */}
-            <section className="py-24 bg-[#F8FAFC] border-t border-[#0B5C8A]/10">
-                <div className="max-w-[1200px] mx-auto px-6">
-                    <div className="bg-[#0B5C8A] rounded-sm p-12 md:p-20 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden">
-                        {/* Background Accent */}
-                        <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#D33C29] rounded-full blur-[100px] opacity-50 pointer-events-none" />
-
-                        <div className="relative z-10 max-w-xl text-center lg:text-left">
-                            <h2 className="text-white text-3xl md:text-5xl font-black tracking-tighter leading-tight font-[Plus_Jakarta_Sans] mb-6">
-                                Ready to Secure Your Legacy?
-                            </h2>
-                            <p className="text-white/80 text-lg font-light leading-relaxed">
-                                Schedule a private, no-obligation consultation with our senior advisors today. Let us curate the perfect parcel of land for your portfolio.
-                            </p>
-                        </div>
-
-                        <div className="relative z-10 shrink-0">
-                            <PremiumButton onClick={() => console.log('Init Contact Protocol')}>
-                                Request Consultation <ArrowRight size={18} />
-                            </PremiumButton>
-                        </div>
                     </div>
                 </div>
             </section>
