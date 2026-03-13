@@ -99,16 +99,6 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* BOTTOM SECTION: Massive Typography Graphic */}
-                <div className="w-full overflow-hidden flex items-center justify-center relative pointer-events-none mt-12 lg:mt-0">
-                    <motion.h1
-                        style={{ y: textY }}
-                        className="text-[10vw] leading-[0.75] font-black font-display tracking-tighter text-[#FFFFFF]/5 uppercase whitespace-nowrap"
-                    >
-                        Thrissur Plots
-                    </motion.h1>
-                </div>
-
                 {/* Legal Bar */}
                 <div className="flex flex-col md:flex-row justify-between w-full items-center gap-6 text-[#FFFFFF]/30 font-body text-[10px] uppercase font-bold tracking-[0.2em] border-t border-[#FFFFFF]/10 pt-8 pb-4 relative z-20">
                     <span>© {new Date().getFullYear()} THRISSUR PLOTS. ALL RIGHTS RESERVED.</span>

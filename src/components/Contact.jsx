@@ -1,174 +1,257 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Send, MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Phone, Mail, MessageCircle, Clock, Send, CheckCircle2, ArrowRight, Map } from 'lucide-react';
 
-const InputField = ({ label, type = "text", placeholder, id, isTextarea = false }) => {
-    const [isFocused, setIsFocused] = useState(false);
-    const [hasValue, setHasValue] = useState(false);
+// --- DESIGN TOKENS ---
+const COLORS = {
+    primary: '#0B5C8A', // Deep Marine Blue
+    accent: '#D33C29',  // Burnt Orange
+    bgLight: '#F8FAFC', // Soft Light Gray/White
+    white: '#FFFFFF',
+};
 
-    const handleBlur = (e) => {
-        setIsFocused(false);
-        setHasValue(e.target.value.length > 0);
+// Apple-grade easing for 60fps fluidity
+const APPLE_EASE = [0.16, 1, 0.3, 1];
+
+// --- MAGNETIC BUTTON COMPONENT ---
+const MagneticButton = ({ children, className, onClick, type = "button" }) => {
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const ref = useRef(null);
+
+    const handleMouse = (e) => {
+        const { clientX, clientY } = e;
+        const { left, top, width, height } = ref.current.getBoundingClientRect();
+        const x = (clientX - (left + width / 2)) * 0.35;
+        const y = (clientY - (top + height / 2)) * 0.35;
+        setPosition({ x, y });
     };
 
+    const reset = () => setPosition({ x: 0, y: 0 });
+
     return (
-        <div className="relative w-full group pt-6" suppressHydrationWarning>
-            <label
-                htmlFor={id}
-                className={`absolute left-0 transition-all duration-300 font-mono tracking-widest uppercase pointer-events-none
-                           ${isFocused || hasValue
-                        ? '-top-1 text-[10px] text-[#D33C29]'
-                        : 'top-6 text-xs text-white/60'}`}
-            >
-                {label}
-            </label>
-
-            {isTextarea ? (
-                <textarea
-                    id={id}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={handleBlur}
-                    onChange={(e) => setHasValue(e.target.value.length > 0)}
-                    className="w-full bg-transparent border-b border-white/20 py-2 text-white outline-none resize-none transition-colors duration-300 h-24"
-                    style={{
-                        borderBottomColor: isFocused ? '#D33C29' : 'rgba(255,255,255,0.2)'
-                    }}
-                />
-            ) : (
-                <input
-                    id={id}
-                    type={type}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={handleBlur}
-                    onChange={(e) => setHasValue(e.target.value.length > 0)}
-                    className="w-full bg-transparent border-b border-white/20 py-2 text-white outline-none transition-colors duration-300"
-                    style={{
-                        borderBottomColor: isFocused ? '#D33C29' : 'rgba(255,255,255,0.2)'
-                    }}
-                />
-            )}
-
-            {/* Animated Bottom Line */}
-            <div
-                className={`absolute bottom-0 left-0 h-[1px] bg-[#D33C29] transition-all duration-500 ease-out`}
-                style={{ width: isFocused ? '100%' : '0%' }}
-            />
-        </div>
+        <motion.button
+            ref={ref}
+            type={type}
+            onMouseMove={handleMouse}
+            onMouseLeave={reset}
+            animate={{ x: position.x, y: position.y }}
+            transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.1 }}
+            className={className}
+            onClick={onClick}
+        >
+            {children}
+        </motion.button>
     );
 };
 
 export default function Contact() {
+    const [formState, setFormState] = useState('idle'); // idle | loading | success
+    const [isVisitRequested, setIsVisitRequested] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormState('loading');
+        setTimeout(() => {
+            setFormState('success');
+            console.log("Inquiry logged for Thrissur Plots Legacy Acquisition.");
+        }, 2000);
+    };
+
     return (
-        <section className="relative py-24 md:py-32 bg-[#0B5C8A] overflow-hidden border-t border-white/10 selection:bg-white selection:text-[#0B5C8A]">
-            {/* Grain Texture Overlay */}
-            <div className="absolute inset-0 pointer-events-none opacity-[0.04] grayscale mix-blend-overlay z-10">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-                    <filter id="noiseFilter">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
-                    </filter>
-                    <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-                </svg>
-            </div>
+        <section className="relative min-h-screen bg-[#F8FAFC] py-20 lg:py-32 px-6 overflow-hidden selection:bg-[#0B5C8A] selection:text-white">
 
-            <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-24 w-full relative z-20">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
+            {/* --- BACKGROUND GRAPHICS --- */}
+            {/* Subtle Dotted Grid Pattern */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: `radial-gradient(${COLORS.primary} 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
 
-                    {/* Left: Private Form */}
-                    <div className="flex flex-col justify-center">
-                        <div className="mb-12">
-                            <span className="inline-flex items-center gap-4 font-mono text-xs tracking-[0.2em] text-[#D33C29] uppercase mb-6">
-                                <span className="w-8 h-[1px] bg-[#D33C29]" />
-                                VIP Concierge
-                            </span>
+            {/* Abstract Map of Thrissur (Floating) */}
+            <motion.div
+                animate={{ y: [0, -20, 0], rotate: [0, 2, 0] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-20 -left-20 opacity-[0.04] pointer-events-none text-[#0B5C8A]"
+            >
+                <Map size={800} strokeWidth={0.5} />
+            </motion.div>
 
-                            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white leading-[1.1]">
-                                Initiate your <br />
-                                <span className="text-white/60 italic font-light">Dialogue.</span>
-                            </h2>
-                        </div>
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 lg:gap-24 relative z-10">
 
-                        <form className="flex flex-col gap-8 max-w-lg">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <InputField id="name" label="Full Name" />
-                                <InputField id="phone" label="Contact Number" />
+                {/* --- LEFT COLUMN: DIRECT CONTACT --- */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, ease: APPLE_EASE }}
+                >
+                    <header className="mb-12">
+                        <motion.span
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="inline-block px-4 py-1.5 rounded-full bg-[#0B5C8A]/10 text-[#0B5C8A] font-mono text-xs font-bold uppercase mb-6"
+                        >
+                            Elite NRI Concierge
+                        </motion.span>
+                        <h2 className="text-[#0B5C8A] text-5xl md:text-7xl font-black tracking-tighter leading-none font-[Plus Jakarta Sans]">
+                            LET’S TALK ABOUT YOUR <span className="text-[#D33C29]">LAND LEGACY.</span>
+                        </h2>
+                        <p className="text-[#0B5C8A]/70 text-lg md:text-xl mt-8 max-w-lg font-light leading-relaxed">
+                            Our team is here to assist you with bespoke queries, private site visits, or legal documentation for your next major investment.
+                        </p>
+                    </header>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                        {/* Call Card */}
+                        <motion.div
+                            whileHover={{ y: -5, borderColor: '#D33C29' }}
+                            className="group p-8 bg-white border border-[#0B5C8A]/10 rounded-3xl shadow-sm transition-all duration-500 hover:shadow-xl hover:shadow-[#0B5C8A]/5"
+                        >
+                            <div className="bg-[#0B5C8A] w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-[#0B5C8A]/20 transition-transform group-hover:scale-110">
+                                <Phone size={24} className="text-white" />
                             </div>
+                            <h3 className="text-[#0B5C8A]/50 font-mono text-xs uppercase tracking-widest mb-1">Direct Connect</h3>
+                            <p className="text-[#0B5C8A] text-2xl font-black mb-6 tracking-tight">+91 94460 00000</p>
+                            <a href="tel:+919446000000" className="inline-flex items-center gap-2 bg-[#0B5C8A] text-white px-6 py-3 rounded-xl text-sm font-bold uppercase tracking-wider hover:bg-[#D33C29] transition-colors">
+                                Call Now <ArrowRight size={16} />
+                            </a>
+                        </motion.div>
 
-                            <InputField id="email" type="email" label="Email Address" />
-
-                            <InputField
-                                id="interest"
-                                label="Investment Interest (e.g. Commercial, Residential)"
-                            />
-
-                            <InputField
-                                id="message"
-                                label="Additional Requirements"
-                                isTextarea={true}
-                            />
-
-                            <button type="button" className="group mt-8 relative w-full sm:w-auto self-start overflow-hidden bg-white px-10 py-5 rounded-none flex items-center justify-center gap-4 transition-all duration-500 hover:text-white">
-                                {/* Button Hover Background */}
-                                <div className="absolute inset-0 w-full h-full bg-[#D33C29] -translate-x-[105%] group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.85,0,0.15,1)]" />
-
-                                <span className="relative z-10 font-mono text-xs tracking-[0.2em] text-[#061E2D] group-hover:text-white transition-colors duration-300 font-bold uppercase">
-                                    Submit Inquiry
-                                </span>
-                                <Send size={14} className="relative z-10 text-[#061E2D] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
-                            </button>
-                        </form>
+                        {/* Email Card */}
+                        <motion.div
+                            whileHover={{ y: -5, borderColor: '#D33C29' }}
+                            className="group p-8 bg-white border border-[#0B5C8A]/10 rounded-3xl shadow-sm transition-all duration-500 hover:shadow-xl hover:shadow-[#0B5C8A]/5"
+                        >
+                            <div className="bg-[#0B5C8A] w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-[#0B5C8A]/20 transition-transform group-hover:scale-110">
+                                <Mail size={24} className="text-white" />
+                            </div>
+                            <h3 className="text-[#0B5C8A]/50 font-mono text-xs uppercase tracking-widest mb-1">Inquiry Desk</h3>
+                            <p className="text-[#0B5C8A] text-2xl font-black mb-6 tracking-tight">invest@thrissur.com</p>
+                            <a href="mailto:invest@thrissur.com" className="inline-flex items-center gap-2 bg-[#0B5C8A] text-white px-6 py-3 rounded-xl text-sm font-bold uppercase tracking-wider hover:bg-[#D33C29] transition-colors">
+                                Email Us <ArrowRight size={16} />
+                            </a>
+                        </motion.div>
                     </div>
 
-                    {/* Right: Companion Imagery / Details */}
-                    <div className="relative h-[500px] lg:h-auto lg:min-h-[700px] flex flex-col justify-end p-8 md:p-10 overflow-hidden group rounded-2xl">
-                        {/* Image Background */}
-                        <div className="absolute inset-0 overflow-hidden bg-[#061E2D]">
-                            <img
-                                src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1500&auto=format&fit=crop"
-                                alt="Thrissur Real Estate"
-                                className="w-full h-full object-cover object-center grayscale opacity-60 group-hover:opacity-80 transition-opacity duration-1000 ease-out"
-                            />
-                            {/* Overlay Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#061E2D] via-[#061E2D]/40 to-transparent" />
+                    <div className="flex flex-wrap items-center gap-10 opacity-70">
+                        <div className="flex items-center gap-3 text-[#0B5C8A]">
+                            <Clock size={20} className="text-[#D33C29]" />
+                            <span className="text-sm font-bold uppercase tracking-widest">Global Support 24/7</span>
                         </div>
-
-                        {/* Contact Details Hovering over Image */}
-                        <div className="relative z-10 flex flex-col gap-10 bg-[#07131C] p-8 md:p-12 border border-white/5 mt-auto shadow-2xl">
-                            <div>
-                                <h3 className="font-sans text-[28px] font-medium tracking-tight text-white mb-8">Corporate Headquarters</h3>
-                                <div className="flex items-start gap-5 text-[#8B9DAA] hover:text-white transition-colors cursor-pointer group/link">
-                                    <MapPin size={22} className="text-[#D33C29] mt-0.5 shrink-0" strokeWidth={1.5} />
-                                    <p className="font-sans font-light leading-relaxed text-[17px]">
-                                        Thrissur Villas Palace,<br />
-                                        SH-69, Near Vadakkumnathan,<br />
-                                        Thrissur, Kerala 680001
-                                    </p>
-                                    <ArrowUpRight size={18} className="text-white/20 group-hover/link:text-white group-hover/link:-translate-y-1 group-hover/link:translate-x-1 transition-all ml-auto" strokeWidth={1.5} />
-                                </div>
-                            </div>
-
-                            <div className="w-full h-px bg-white/5" />
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                                <div className="flex flex-col gap-4">
-                                    <span className="font-mono text-[10px] tracking-[0.2em] font-bold text-[#D33C29] uppercase">Direct Line</span>
-                                    <a href="tel:+919446000000" className="flex items-start gap-3.5 text-lg text-white font-medium hover:text-[#D33C29] transition-colors group">
-                                        <Phone size={18} strokeWidth={1.5} className="mt-0.5 text-white/50 group-hover:text-[#D33C29] transition-colors" />
-                                        +91 94460 00000
-                                    </a>
-                                </div>
-                                <div className="flex flex-col gap-4">
-                                    <span className="font-mono text-[10px] tracking-[0.2em] font-bold text-[#D33C29] uppercase">Digital Desk</span>
-                                    <a href="mailto:concierge@thrissur.com" className="flex items-start gap-3.5 text-lg text-white font-medium hover:text-[#D33C29] transition-colors group break-all">
-                                        <Mail size={18} strokeWidth={1.5} className="mt-0.5 text-white/50 group-hover:text-[#D33C29] transition-colors shrink-0" />
-                                        concierge@thriss<br className="hidden xl:block" />ur.com
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <button className="flex items-center gap-3 text-[#0B5C8A] hover:text-[#D33C29] transition-colors group">
+                            <MessageCircle size={20} className="text-[#D33C29]" />
+                            <span className="text-sm font-bold uppercase tracking-widest">+91 94460 00001</span>
+                        </button>
                     </div>
+                </motion.div>
 
-                </div>
+                {/* --- RIGHT COLUMN: PREMIUM FORM CARD --- */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: APPLE_EASE }}
+                >
+                    <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(11,92,138,0.12)] border border-[#0B5C8A]/5">
+                        <AnimatePresence mode="wait">
+                            {formState === 'success' ? (
+                                <motion.div
+                                    key="success"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="py-16 text-center"
+                                >
+                                    <div className="w-24 h-24 bg-[#D33C29]/10 rounded-full flex items-center justify-center mb-8 mx-auto">
+                                        <CheckCircle2 size={48} className="text-[#D33C29]" />
+                                    </div>
+                                    <h3 className="text-[#0B5C8A] text-3xl font-black mb-4">Connection Secured</h3>
+                                    <p className="text-[#0B5C8A]/60 font-light">An investment principal will contact you shortly to discuss your land legacy.</p>
+                                </motion.div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    <div className="space-y-5">
+                                        {[
+                                            { label: 'Full Name', type: 'text', placeholder: 'e.g. John Doe' },
+                                            { label: 'Email Address', type: 'email', placeholder: 'john@example.com' },
+                                            { label: 'Phone Number', type: 'tel', placeholder: '+91 00000 00000' }
+                                        ].map((field, idx) => (
+                                            <div key={idx} className="space-y-2">
+                                                <label className="block text-xs uppercase tracking-widest text-[#0B5C8A] font-bold ml-1">
+                                                    {field.label}
+                                                </label>
+                                                <input
+                                                    required
+                                                    type={field.type}
+                                                    placeholder={field.placeholder}
+                                                    className="w-full bg-[#0B5C8A]/[0.02] border-2 border-[#0B5C8A]/10 rounded-xl px-5 py-3.5 text-base text-[#0B5C8A] font-bold outline-none focus:border-[#0B5C8A]/40 focus:bg-transparent transition-all placeholder:text-[#0B5C8A]/50 placeholder:font-medium"
+                                                />
+                                            </div>
+                                        ))}
+
+                                        <div className="space-y-2">
+                                            <label className="block text-xs uppercase tracking-widest text-[#0B5C8A] font-bold ml-1">
+                                                Message / Requirements
+                                            </label>
+                                            <textarea
+                                                placeholder="Discuss your investment goals..."
+                                                rows={3}
+                                                className="w-full bg-[#0B5C8A]/[0.02] border-2 border-[#0B5C8A]/10 rounded-xl px-5 py-3.5 text-base text-[#0B5C8A] font-bold outline-none focus:border-[#0B5C8A]/40 focus:bg-transparent transition-all resize-none placeholder:text-[#0B5C8A]/50 placeholder:font-medium"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-4 py-2 pt-2">
+                                        <div className="relative">
+                                            <input
+                                                type="checkbox"
+                                                id="site-visit"
+                                                onChange={(e) => setIsVisitRequested(e.target.checked)}
+                                                className="peer hidden"
+                                            />
+                                            <div className="w-6 h-6 border-2 border-[#0B5C8A]/20 rounded-lg bg-white peer-checked:bg-[#0B5C8A] peer-checked:border-[#0B5C8A] transition-all cursor-pointer flex items-center justify-center">
+                                                <CheckCircle2 size={14} className="text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
+                                            </div>
+                                            <label htmlFor="site-visit" className="absolute inset-0 cursor-pointer" />
+                                        </div>
+                                        <label htmlFor="site-visit" className="text-[#0B5C8A] text-base font-bold cursor-pointer select-none">I am interested in a physical site visit</label>
+                                    </div>
+
+                                    <AnimatePresence>
+                                        {isVisitRequested && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: 'auto', opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                className="overflow-hidden"
+                                            >
+                                                <div className="space-y-2 pb-2">
+                                                    <label className="block text-xs uppercase tracking-widest text-[#0B5C8A] font-bold ml-1">
+                                                        Preferred Date
+                                                    </label>
+                                                    <input
+                                                        type="date"
+                                                        className="w-full bg-[#0B5C8A]/[0.02] border-2 border-[#0B5C8A]/10 rounded-xl px-5 py-3.5 text-base text-[#0B5C8A] font-bold outline-none focus:border-[#0B5C8A]/40 focus:bg-transparent transition-all mb-4 placeholder:text-[#0B5C8A]/50"
+                                                    />
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+
+                                    <MagneticButton
+                                        type="submit"
+                                        className="w-full bg-[#D33C29] text-white py-5 rounded-xl font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:shadow-xl hover:shadow-[#D33C29]/30 transition-all active:scale-[0.98]"
+                                    >
+                                        {formState === 'loading' ? (
+                                            <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full" />
+                                        ) : (
+                                            <>Initialize Consultation <Send size={18} /></>
+                                        )}
+                                    </MagneticButton>
+                                </form>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </motion.div>
+
             </div>
         </section>
     );

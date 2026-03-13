@@ -18,6 +18,7 @@ export default function Header() {
 
     const navLinks = [
         { name: 'Heritage', href: '#' },
+        { name: 'About', href: '/about' },
         { name: 'Portfolio', href: '#' },
         { name: 'Investment', href: '#' },
         { name: 'Contact', href: '#' },
