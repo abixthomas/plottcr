@@ -116,7 +116,7 @@ export default function PlotsPage() {
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     className="hidden lg:block shrink-0 bg-[#F8FAFC]"
                 >
-                    <div className="sticky top-[100px] z-20 px-5 py-4 max-h-[calc(100vh-120px)] overflow-y-auto no-scrollbar">
+                    <div className="sticky top-[100px] z-20 px-5 pt-4 pb-0 h-[calc(100vh-120px)] overflow-y-auto no-scrollbar">
                         <FilterPanel
                             filters={filters}
                             handleFilterChange={handleFilterChange}

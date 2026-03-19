@@ -51,7 +51,7 @@ export default function FilterPanel({
     );
 
     return (
-        <div className={`flex flex-col gap-3 ${isMobile ? 'px-8 pt-8 pb-16' : 'px-6 pt-6 pb-0'} h-fit bg-white border border-slate-200 shadow-[0_20px_50px_rgba(6,61,105,0.05)] rounded-2xl transition-all duration-500`}>
+        <div className={`flex flex-col gap-3 ${isMobile ? 'px-8 pt-8 pb-16 h-fit' : 'px-6 pt-6 pb-0 h-full'} bg-white border border-slate-200 shadow-[0_20px_50px_rgba(6,61,105,0.05)] rounded-2xl transition-all duration-500`}>
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                 <div>
