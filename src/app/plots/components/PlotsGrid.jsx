@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import PlotListingCard from './PlotListingCard';
@@ -12,6 +12,27 @@ export default function PlotsGrid({
     totalCount, 
     resetFilters 
 }) {
+    const sentinelRef = useRef(null);
+
+    // ─── INFINITE SCROLL LOGIC ───────────────────────────────────
+    useEffect(() => {
+        if (!sentinelRef.current) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && visibleCount < totalCount) {
+                // Throttle a bit to prevent multiple triggers in one go
+                setVisibleCount(prev => prev + 6);
+            }
+        }, {
+            root: null,
+            rootMargin: '20% 0px', // Trigger before completely hitting the bottom
+            threshold: 0.1
+        });
+
+        observer.observe(sentinelRef.current);
+        return () => observer.disconnect();
+    }, [visibleCount, totalCount, setVisibleCount]);
+
     return (
         <section className="flex-1 bg-[#F1F5F9] min-h-screen">
             <div className="p-6 lg:p-8 lg:px-12">
@@ -28,18 +49,28 @@ export default function PlotsGrid({
                             </AnimatePresence>
                         </motion.div>
 
-                        {/* Pagination Trigger */}
-                        {visibleCount < totalCount && (
-                            <div className="flex justify-center mt-12 mb-20">
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    onClick={() => setVisibleCount(prev => prev + 6)}
-                                    className="px-12 py-5 bg-[#061E2D] text-white rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] shadow-2xl transition-all"
-                                >
-                                    Load More Discoveries
-                                </motion.button>
-                            </div>
-                        )}
+                        {/* Pagination Sentinel */}
+                        <div ref={sentinelRef} className="h-20 w-full flex items-center justify-center">
+                            {visibleCount < totalCount && (
+                                <div className="flex gap-1.5 opacity-50">
+                                    <motion.div
+                                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 1, 0.3] }}
+                                        transition={{ duration: 1, repeat: Infinity, delay: 0 }}
+                                        className="w-1.5 h-1.5 rounded-full bg-[#061E2D]"
+                                    />
+                                    <motion.div
+                                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 1, 0.3] }}
+                                        transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
+                                        className="w-1.5 h-1.5 rounded-full bg-[#061E2D]"
+                                    />
+                                    <motion.div
+                                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 1, 0.3] }}
+                                        transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
+                                        className="w-1.5 h-1.5 rounded-full bg-[#061E2D]"
+                                    />
+                                </div>
+                            )}
+                        </div>
                     </>
                 ) : (
                     <motion.div

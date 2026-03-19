@@ -12,8 +12,8 @@ import PlotsGrid from './components/PlotsGrid';
 import MobileFilter from './components/MobileFilter';
 
 const LOCATIONS = ["Thrissur City", "Guruvayur", "Irinjalakuda", "Koratty", "Puzhakkal", "Punkunnam", "Kunnamkulam", "Chalakudy", "Kodungallur"];
-const PURPOSES = ["All", "Residential", "Commercial", "Investment"];
-const SIZE_UNITS = ["Cents", "Sq.Ft.", "Acres"];
+const PURPOSES = ["All", "Plots", "Lands"];
+const SIZE_UNITS = ["Cents", "Acres"];
 const MAX_PRICE = 50000000;
 
 export default function PlotsPage() {
@@ -73,10 +73,10 @@ export default function PlotsPage() {
             if (filters.purpose !== 'All' && plot.purpose !== filters.purpose) return false;
             if (plot.priceValue < filters.priceRange[0] || plot.priceValue > filters.priceRange[1]) return false;
             if (filters.roadAccess && !plot.roadAccess) return false;
-            
+
             const sv = plot.sizeValue || 0;
             const sUnit = plot.sizeUnit || 'Cents';
-            
+
             if (filters.sizeUnit === sUnit) {
                 if (filters.sizeMin && sv < Number(filters.sizeMin)) return false;
                 if (filters.sizeMax && sv > Number(filters.sizeMax)) return false;
@@ -97,7 +97,7 @@ export default function PlotsPage() {
 
             <PlotsHero heroScale={heroScale} />
 
-            <PlotsToolbar 
+            <PlotsToolbar
                 onOpenMobileFilters={() => setIsMobileFilterOpen(true)}
                 onToggleSidebar={() => setIsSidebarVisible(!isSidebarVisible)}
                 isSidebarVisible={isSidebarVisible}
@@ -107,17 +107,17 @@ export default function PlotsPage() {
             />
 
             <main className="flex flex-col lg:flex-row min-h-screen bg-[#F8FAFC]">
-                <motion.aside 
+                <motion.aside
                     initial={false}
-                    animate={{ 
-                        width: isSidebarVisible ? 380 : 0,
+                    animate={{
+                        width: isSidebarVisible ? 440 : 0,
                         opacity: isSidebarVisible ? 1 : 0,
                     }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     className="hidden lg:block shrink-0 border-r border-[#061E2D]/5 relative bg-white/50"
                 >
                     <div className="sticky top-[160px] z-20 px-5 py-4">
-                        <FilterPanel 
+                        <FilterPanel
                             filters={filters}
                             handleFilterChange={handleFilterChange}
                             toggleLocation={toggleLocation}
@@ -132,7 +132,7 @@ export default function PlotsPage() {
                 </motion.aside>
 
                 <div className="flex-1">
-                    <PlotsGrid 
+                    <PlotsGrid
                         plots={displayedPlots}
                         visibleCount={visibleCount}
                         setVisibleCount={setVisibleCount}
@@ -142,7 +142,7 @@ export default function PlotsPage() {
                 </div>
             </main>
 
-            <MobileFilter 
+            <MobileFilter
                 isOpen={isMobileFilterOpen}
                 onClose={() => setIsMobileFilterOpen(false)}
                 filters={filters}

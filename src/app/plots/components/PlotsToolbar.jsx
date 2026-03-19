@@ -5,13 +5,13 @@ import { SlidersHorizontal, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SortDropdown from './SortDropdown';
 
-export default function PlotsToolbar({ 
-    onOpenMobileFilters, 
-    onToggleSidebar, 
-    isSidebarVisible, 
-    resultsCount, 
-    sortBy, 
-    setSortBy 
+export default function PlotsToolbar({
+    onOpenMobileFilters,
+    onToggleSidebar,
+    isSidebarVisible,
+    resultsCount,
+    sortBy,
+    setSortBy
 }) {
     const [isSortOpen, setIsSortOpen] = useState(false);
 
@@ -43,7 +43,7 @@ export default function PlotsToolbar({
                         <ChevronLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
                     </motion.div>
                     <span className="text-[10px] font-black uppercase tracking-widest">
-                        {isSidebarVisible ? 'Hide Intelligence' : 'Show Intelligence'}
+                        {isSidebarVisible ? 'Hide Filters' : 'Show Filters'}
                     </span>
                 </button>
                 <div>
@@ -53,9 +53,9 @@ export default function PlotsToolbar({
             </div>
 
             <div className="flex items-center gap-4">
-                <SortDropdown 
-                    sortBy={sortBy} 
-                    setSortBy={setSortBy} 
+                <SortDropdown
+                    sortBy={sortBy}
+                    setSortBy={setSortBy}
                     options={sortOptions}
                     isOpen={isSortOpen}
                     setIsOpen={setIsSortOpen}

@@ -12,8 +12,8 @@ const BASE_DATE = new Date('2026-03-01T00:00:00Z').getTime();
 
 export const generateMockPlots = () => {
     const locations = ["Thrissur City", "Guruvayur", "Irinjalakuda", "Koratty", "Puzhakkal", "Punkunnam", "Kunnamkulam", "Chalakudy", "Kodungallur"];
-    const purposes = ["Residential", "Commercial", "Investment"];
-    const units = ["Cents", "Sq.ft", "Acres"];
+    const purposes = ["Plots", "Lands"];
+    const units = ["Cents", "Acres"];
     const landmarks = ["Near Temple", "Near Hospital", "Highway Access", "Near School", "River View", "City Center"];
     const images = [
         "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2000&auto=format&fit=crop",
@@ -39,7 +39,7 @@ export const generateMockPlots = () => {
             sizeUnit: "Acres",
             priceText: "₹8.5 Crores",
             priceValue: 85000000,
-            purpose: "Commercial",
+            purpose: "Lands",
             roadAccess: true,
             landmark: "Opposite Lulu Mall Thrissur",
             image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1500&auto=format&fit=crop",
@@ -55,7 +55,7 @@ export const generateMockPlots = () => {
             sizeUnit: "Cents",
             priceText: "₹42 Lakhs",
             priceValue: 4200000,
-            purpose: "Residential",
+            purpose: "Plots",
             roadAccess: true,
             landmark: "Heritage Zone Near Vadakkumnathan",
             image: images[0],
@@ -71,7 +71,7 @@ export const generateMockPlots = () => {
             sizeUnit: "Cents",
             priceText: "₹1.1 Crores",
             priceValue: 11000000,
-            purpose: "Commercial",
+            purpose: "Lands",
             roadAccess: true,
             landmark: "Inner Ring Road Access",
             image: images[1],
@@ -87,7 +87,7 @@ export const generateMockPlots = () => {
             sizeUnit: "Cents",
             priceText: "₹85 Lakhs",
             priceValue: 8500000,
-            purpose: "Residential",
+            purpose: "Plots",
             roadAccess: true,
             landmark: "Near Koodalmanikyam Temple",
             image: images[2],
@@ -103,7 +103,7 @@ export const generateMockPlots = () => {
             sizeUnit: "Acres",
             priceText: "₹3.2 Crores",
             priceValue: 32000000,
-            purpose: "Investment",
+            purpose: "Lands",
             roadAccess: true,
             landmark: "Direct Highway Frontage",
             image: images[5],
@@ -119,7 +119,7 @@ export const generateMockPlots = () => {
             sizeUnit: "Cents",
             priceText: "₹38 Lakhs",
             priceValue: 3800000,
-            purpose: "Residential",
+            purpose: "Plots",
             roadAccess: false,
             landmark: "Riverside Garden Access",
             image: images[3],
@@ -140,8 +140,6 @@ export const generateMockPlots = () => {
         let sizeValue;
         if (unit === 'Cents') {
             sizeValue = Math.floor(prng() * 50) + 3; // 3 to 53 cents
-        } else if (unit === 'Sq.ft') {
-            sizeValue = Math.floor(prng() * 10000) + 1000; // 1000 to 11000 sqft
         } else {
             sizeValue = (prng() * 5 + 0.5).toFixed(1); // 0.5 to 5.5 acres
         }
@@ -150,8 +148,6 @@ export const generateMockPlots = () => {
         let priceValue = 0;
         if (unit === 'Cents') {
             priceValue = sizeValue * (Math.floor(prng() * 300000) + 200000); // 2-5 lakhs per cent
-        } else if (unit === 'Sq.ft') {
-            priceValue = sizeValue * (Math.floor(prng() * 1000) + 500);
         } else {
             priceValue = sizeValue * 100 * (Math.floor(prng() * 200000) + 100000); 
         }
