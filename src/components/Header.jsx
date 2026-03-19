@@ -43,7 +43,7 @@ export default function Header({ forceDark = false }) {
                         <span className="font-serif font-bold text-surface text-xl">T</span>
                     </div>
                     <span className={`font-serif text-2xl font-bold tracking-tighter transition-colors duration-500 ${isDarkText ? 'text-primary' : 'text-white'}`}>
-                        THRISSUR <span className="text-accent">VILLAS</span>
+                        THRISSUR <span className="text-accent">PLOTS</span>
                     </span>
                 </motion.div>
 

@@ -47,7 +47,7 @@ export default function PlotsToolbar({
                     </span>
                 </button>
                 <div>
-                    <h2 className="text-2xl font-black text-[#061E2D] tracking-tight">Available Parcels</h2>
+                    <h2 className="text-2xl font-black text-[#061E2D] tracking-tight">Available Plots</h2>
                     <p className="text-[10px] font-bold uppercase tracking-widest text-[#0B5C8A]">{resultsCount} Curated Assets</p>
                 </div>
             </div>
