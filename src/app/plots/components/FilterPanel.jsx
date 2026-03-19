@@ -65,7 +65,7 @@ export default function FilterPanel({
 
             {/* Regional Selection */}
             <div className="flex flex-col gap-2">
-                <SectionHeader icon={MapPin} title="Geography" subtitle="Target Regions" />
+                <SectionHeader icon={MapPin} title="Location" subtitle="Target Regions" />
                 <div className="relative group pl-7">
                     <motion.button
                         whileTap={{ scale: 0.98 }}
@@ -100,7 +100,7 @@ export default function FilterPanel({
 
             {/* Capital Range */}
             <div className="flex flex-col gap-2">
-                <SectionHeader icon={IndianRupee} title="Capitalization" subtitle="Investment Threshold" />
+                <SectionHeader icon={IndianRupee} title="Price Range" subtitle="Investment Threshold" />
                 <div className="px-2 pt-4 pb-2 pl-7">
                     <Slider.Root
                         className="relative flex items-center w-full h-4 touch-none"
