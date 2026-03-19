@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import FilterPanel from './FilterPanel';
+import useClickOutside from '@/hooks/useClickOutside';
 
 export default function MobileFilter({ 
     isOpen, 
@@ -18,6 +19,11 @@ export default function MobileFilter({
     maxPrice,
     formatPrice
 }) {
+    const panelRef = useRef(null);
+    useClickOutside(panelRef, () => {
+        if (isOpen) onClose();
+    });
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -28,6 +34,7 @@ export default function MobileFilter({
                     className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-lg flex justify-end"
                 >
                     <motion.div
+                        ref={panelRef}
                         initial={{ x: '100%' }}
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}

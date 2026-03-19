@@ -46,7 +46,7 @@ export default function PlotListingCard({ plot, index = 0 }) {
                 transition: { duration: 0.4, ease: PREMIUM_EASE }
             }}
             onClick={() => setIsSelected(!isSelected)}
-            className={`group relative bg-white border transition-all duration-400 cursor-pointer ${isSelected ? 'border-[#D33C29] ring-2 ring-[#D33C29]/20 scale-[1.02] shadow-2xl z-10' : 'border-slate-200 hover:border-[#D33C29]/30'
+            className={`group relative bg-white border transition-all duration-400 cursor-pointer ${isSelected ? 'border-[#D33C29] ring-2 ring-[#D33C29]/20 scale-[1.02] shadow-2xl z-10' : 'border-slate-200 hover:border-[#D33C29]/40 hover:shadow-xl'
                 }`}
         >
             {/* Selection Indicator */}
@@ -97,9 +97,9 @@ export default function PlotListingCard({ plot, index = 0 }) {
                     {plot.title || plot.name || "Exclusive Asset Plot"}
                 </motion.h3>
 
-                <motion.div variants={childVariants} className="flex items-center gap-1.5 mb-4 text-slate-500 font-bold uppercase tracking-widest text-[10px]">
+                <motion.div variants={childVariants} className="flex items-center gap-1.5 mb-4 text-slate-600 font-bold uppercase tracking-widest text-[10px]">
                     <MapPin size={11} className="text-[#D33C29]" />
-                    <span className="truncate">{plot.location}, Kerala</span>
+                    <span className="truncate text-slate-700">{plot.location}, Kerala</span>
                 </motion.div>
 
                 {/* Specs */}
@@ -110,7 +110,7 @@ export default function PlotListingCard({ plot, index = 0 }) {
                     </div>
                     <div className="flex items-center gap-1.5">
                         <Route size={13} className="text-[#D33C29]" />
-                        <span className="text-sm font-black text-slate-900">{plot.roadAccess ? "Road" : "Path"}</span>
+                        <span className="text-sm font-black text-slate-900">{plot.roadAccess ? "Connected" : "Access Path"}</span>
                     </div>
                 </motion.div>
 

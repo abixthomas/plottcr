@@ -21,7 +21,7 @@ export default function PlotsPage() {
     const [filters, setFilters] = useState({
         locations: [],
         priceRange: [0, MAX_PRICE / 2],
-        purpose: 'All',
+        purposes: [],
         sizeMin: '',
         sizeMax: '',
         sizeUnit: 'Cents',
@@ -52,7 +52,7 @@ export default function PlotsPage() {
         setFilters({
             locations: [],
             priceRange: [0, MAX_PRICE / 2],
-            purpose: 'All',
+            purposes: [],
             sizeMin: '',
             sizeMax: '',
             sizeUnit: 'Cents',
@@ -70,7 +70,7 @@ export default function PlotsPage() {
     const filteredPlots = useMemo(() => {
         return mockPlots.filter(plot => {
             if (filters.locations.length > 0 && !filters.locations.includes(plot.location)) return false;
-            if (filters.purpose !== 'All' && plot.purpose !== filters.purpose) return false;
+            if (filters.purposes.length > 0 && !filters.purposes.includes(plot.purpose)) return false;
             if (plot.priceValue < filters.priceRange[0] || plot.priceValue > filters.priceRange[1]) return false;
             if (filters.roadAccess && !plot.roadAccess) return false;
 
@@ -106,7 +106,7 @@ export default function PlotsPage() {
                 setSortBy={setSortBy}
             />
 
-            <main className="flex flex-col lg:flex-row min-h-screen bg-[#F8FAFC]">
+            <main className="flex flex-col lg:flex-row bg-[#F8FAFC]">
                 <motion.aside
                     initial={false}
                     animate={{
@@ -114,9 +114,9 @@ export default function PlotsPage() {
                         opacity: isSidebarVisible ? 1 : 0,
                     }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="hidden lg:block shrink-0 border-r border-[#061E2D]/5 relative bg-white/50"
+                    className="hidden lg:block shrink-0 bg-[#F8FAFC]"
                 >
-                    <div className="sticky top-[160px] z-20 px-5 py-4">
+                    <div className="sticky top-[100px] z-20 px-5 py-4 max-h-[calc(100vh-120px)] overflow-y-auto no-scrollbar">
                         <FilterPanel
                             filters={filters}
                             handleFilterChange={handleFilterChange}
