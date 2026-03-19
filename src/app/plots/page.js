@@ -110,14 +110,13 @@ export default function PlotsPage() {
                 <motion.aside 
                     initial={false}
                     animate={{ 
-                        width: isSidebarVisible ? 420 : 0,
+                        width: isSidebarVisible ? 380 : 0,
                         opacity: isSidebarVisible ? 1 : 0,
-                        marginRight: isSidebarVisible ? 0 : -20
                     }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="hidden lg:block shrink-0 border-r border-[#061E2D]/5 relative overflow-hidden bg-white/50"
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="hidden lg:block shrink-0 border-r border-[#061E2D]/5 relative bg-white/50"
                 >
-                    <div className="sticky top-[152px] z-20 px-6 py-8 h-[calc(100vh-152px)] overflow-y-auto no-scrollbar">
+                    <div className="sticky top-[160px] z-20 px-5 py-4">
                         <FilterPanel 
                             filters={filters}
                             handleFilterChange={handleFilterChange}
